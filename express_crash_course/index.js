@@ -7,9 +7,14 @@ const app = express();
 // init middleware
 // app.use(logger);
 
+// Body Parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // set a static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// members api routes
 app.use('/api/members', require('./routes/api/members'));
 
 // usually created in seperate config file
