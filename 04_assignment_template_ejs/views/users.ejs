@@ -2,8 +2,13 @@
 </head>
   <body>
     <h1>Users registered</h1>
-    <ul>
-      <li></li>
-    </ul>
-  </body>
-</html>
+    <% if(users.length > 0) { %>
+      <% for(let user of users) { %>
+      <ul>
+        <li><%= user.name %></li>
+      </ul>
+      <% } %>
+    <% } else { %>
+    <h2>No users entered!</h2>
+    <% } %>
+<%- include('./includes/end.ejs')%>
