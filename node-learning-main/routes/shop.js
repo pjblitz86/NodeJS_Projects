@@ -1,18 +1,7 @@
-const path = require("path");
-const rootDir = require("../util/path");
 const express = require("express");
-
 const router = express.Router();
-const adminData = require("./admin");
+const productsController = require('../controllers/products');
 
-router.get("/", (req, res, next) => {
-  const products = adminData.products;
-  // passing to pug template
-  res.render("shop", {
-    prods: products,
-    pageTitle: "My Shop",
-    path: "/"
-  });
-});
+router.get("/", productsController.getProducts);
 
 module.exports = router;
