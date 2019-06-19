@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const Sequelize = require("sequelize/index");
 
 const sequelize = new Sequelize("node_shop", "root", "juknelis86", {
   dialect: "mysql",
