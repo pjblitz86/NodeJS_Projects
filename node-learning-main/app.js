@@ -43,7 +43,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
   // .sync({ force: true })
-  //to override tables if no relation created
+  //to override tables if relation created
   .sync()
   .then(result => {
     return User.findByPk(1);
@@ -51,7 +51,7 @@ sequelize
   })
   .then(user => {
     if (!user) {
-      User.create({ name: "Paul", email: "test@test.com" });
+      return User.create({ name: "Paul", email: "test@test.com" });
     }
     return user;
   })
