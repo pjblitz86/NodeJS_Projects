@@ -11,12 +11,14 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
   const product = new Product(null, title, imageUrl, description, price);
-  Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description
-  })
+  req.user
+    .createProduct({
+      // sequelize magic method
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description
+    })
     .then(result => {
       console.log("created product");
       res.redirect("/admin/products");
@@ -30,8 +32,11 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  Product.findByPk(prodId)
-    .then(product => {
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // Product.findByPk(prodId)
+    .then(products => {
+      const product = products[0];
       if (!product) {
         return res.redirect("/");
       } else {
@@ -68,7 +73,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  req.user
+    .getProducts()
     .then(products => {
       res.render("admin/products", {
         products: products,
