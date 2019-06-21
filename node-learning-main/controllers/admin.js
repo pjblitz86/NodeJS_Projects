@@ -10,20 +10,28 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const product = new Product(null, title, imageUrl, description, price);
-  req.user
-    .createProduct({
-      // sequelize magic method
-      title: title,
-      price: price,
-      imageUrl: imageUrl,
-      description: description
-    })
+  const product = new Product(title, price, description, imageUrl);
+  product
+    .save()
     .then(result => {
       console.log("created product");
       res.redirect("/admin/products");
     })
     .catch(err => console.log(err));
+
+  // req.user
+  //   .createProduct({
+  //     // sequelize magic method
+  //     title: title,
+  //     price: price,
+  //     imageUrl: imageUrl,
+  //     description: description
+  //   })
+  //   .then(result => {
+  //     console.log("created product");
+  //     res.redirect("/admin/products");
+  //   })
+  //   .catch(err => console.log(err));
 };
 
 // exports.getEditProduct = (req, res, next) => {
