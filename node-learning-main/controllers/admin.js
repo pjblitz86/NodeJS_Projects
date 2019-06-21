@@ -82,9 +82,6 @@ exports.getProducts = (req, res, next) => {
         path: "/admin/products"
       });
     })
-    .then(() => {
-      res.redirect("/cart");
-    })
     .catch(err => console.log(err));
 };
 
