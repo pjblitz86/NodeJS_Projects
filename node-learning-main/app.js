@@ -12,9 +12,19 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
 const mongoConnect = require("./util/database").mongoConnect;
+const User = require("./models/user");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res, next) => {
+  User.findById("5d19bf1142c90e0d6c41fcb2")
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
