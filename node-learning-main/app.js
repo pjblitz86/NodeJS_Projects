@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const path = require("path");
 
 const app = express();
@@ -11,7 +12,6 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
-const mongoConnect = require("./util/database").mongoConnect;
 const User = require("./models/user");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,6 +30,13 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(3000);
-});
+mongoose
+  .connect(
+    "mongodb+srv://pjblitz86:pjblitz86@cluster0-c1rev.mongodb.net/test?retryWrites=true&w=majority",
+    { useNewUrlParser: true }
+  )
+  .then(result => {
+    console.log("mongo connected");
+    app.listen(3000);
+  })
+  .catch(err => console.log(err));
