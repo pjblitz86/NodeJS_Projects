@@ -12,19 +12,19 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
-// const User = require("./models/user");
+const User = require("./models/user");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//   User.findById("5d19bf1142c90e0d6c41fcb2")
-//     .then(user => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("5d1b3921bd5d3d213cd71c23")
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -37,6 +37,18 @@ mongoose
   )
   .then(result => {
     console.log("mongo connected");
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: "Paul",
+          email: "paul@test.com",
+          cart: {
+            items: []
+          }
+        });
+        user.save();
+      }
+    });
     app.listen(3000);
   })
   .catch(err => console.log(err));
