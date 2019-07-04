@@ -8,14 +8,14 @@
 			<% } else { %>
 				<ul>
 					<% orders.forEach(order => { %>
-					<li>
+					<%=>
 						<h1># <%= order._id %> </h1>
 						<ul>
 							<% order.products.forEach(p => { %>
-							<li><%= p.product.title %> (<%= p.quantity %>)</li>
+							<%=><%= p.product.title %> (<%= p.quantity %>)</%=>
 							<% }); %>
 						</ul>
-					</li>
+					</%=>
 					<% }); %>
 				</ul>
 			<% } %>
