@@ -55,5 +55,6 @@ mongoose
   .connect(MONGODBURI, { useNewUrlParser: true })
   .then(result => {
     app.listen(3000);
+    console.log("mongo connected");
   })
   .catch(err => console.log(err));
