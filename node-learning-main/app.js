@@ -54,19 +54,6 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODBURI, { useNewUrlParser: true })
   .then(result => {
-    console.log("mongo connected");
-    User.findOne().then(user => {
-      if (!user) {
-        const user = new User({
-          name: "Paul",
-          email: "paul@test.com",
-          cart: {
-            items: []
-          }
-        });
-        user.save();
-      }
-    });
     app.listen(3000);
   })
   .catch(err => console.log(err));
