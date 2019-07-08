@@ -49,11 +49,13 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  const updatedTitle = req.body.title;
-  const updatedPrice = req.body.price;
-  const updatedImageUrl = req.body.imageUrl;
-  const updatedDesc = req.body.description;
+  const {
+    prodId,
+    updatedTitle,
+    updatedPrice,
+    updatedImageUrl,
+    updatedDesc
+  } = req.body;
   Product.findById(prodId)
     .then(product => {
       product.title = updatedTitle;
@@ -70,7 +72,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({ userId: req.user._id })
     .then(products => {
       res.render("admin/products", {
         products: products,
