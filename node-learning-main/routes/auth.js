@@ -1,12 +1,19 @@
 const express = require("express");
 const authController = require("../controllers/auth");
 const router = express.Router();
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
 
 router.get("/login", authController.getLogin);
 router.get("/signup", authController.getSignup);
 router.post("/login", authController.postLogin);
-router.post("/signup", check("email").isEmail(), authController.postSignup);
+router.post(
+  "/signup",
+  [check("email")
+    .isEmail()
+    .withMessage("Please enter a valid email"),
+  body("password", "Please enter a password with numbers and text with at least 5 characters").isLength({min: 5}).isAlphanumeric()],
+  authController.postSignup
+);
 router.post("/logout", authController.postLogout);
 router.get("/reset", authController.getReset);
 router.post("/reset", authController.postReset);
