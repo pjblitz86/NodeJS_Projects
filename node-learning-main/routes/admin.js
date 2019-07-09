@@ -16,12 +16,10 @@ router.post(
       .isLength({ min: 3 })
       .trim(),
     body("imageUrl")
-      .isURL()
+      .isLength({ min: 3 })
       .trim(),
     body("price").isFloat(),
-    body("description")
-      .isLength({ min: 4, max: 255 })
-      .trim()
+    body("description").isLength({ min: 4, max: 255 })
   ],
   adminController.postAddProduct
 );
@@ -37,12 +35,10 @@ router.post(
       .isLength({ min: 3 })
       .trim(),
     body("imageUrl")
-      .isURL()
+      .isLength({ min: 3 })
       .trim(),
     body("price").isFloat(),
-    body("description")
-      .isLength({ min: 4, max: 255 })
-      .trim()
+    body("description").isLength({ min: 4, max: 255 })
   ],
   adminController.postEditProduct
 );
