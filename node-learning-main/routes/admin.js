@@ -16,7 +16,9 @@ router.post(
       .isLength({ min: 3 })
       .trim(),
     body("price").isFloat(),
-    body("description").isLength({ min: 4, max: 255 })
+    body("description")
+      .isLength({ min: 4, max: 255 })
+      .trim()
   ],
   adminController.postAddProduct
 );
@@ -31,11 +33,10 @@ router.post(
       .isString()
       .isLength({ min: 3 })
       .trim(),
-    body("imageUrl")
-      .isLength({ min: 3 })
-      .trim(),
     body("price").isFloat(),
-    body("description").isLength({ min: 4, max: 255 })
+    body("description")
+      .isLength({ min: 4, max: 255 })
+      .trim()
   ],
   adminController.postEditProduct
 );
