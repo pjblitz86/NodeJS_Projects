@@ -3,7 +3,7 @@ const Order = require("../models/order");
 const fs = require("fs");
 const path = require("path");
 const PDFDocument = require("pdfkit");
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 1;
 const catchError = require("../util/catch500Error");
 
 exports.getProducts = (req, res, next) => {
@@ -33,15 +33,28 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  const page = req.query.page;
+  const page = +req.query.page || 1;
+  let totalItems;
+
   Product.find()
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+    .countDocuments()
+    .then(numProducts => {
+      totalItems = numProducts;
+      return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
     .then(products => {
       res.render("shop/index", {
         products: products,
         pageTitle: "My Shop",
-        path: "/"
+        path: "/",
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
     })
     .catch(err => catchError(err, next));
