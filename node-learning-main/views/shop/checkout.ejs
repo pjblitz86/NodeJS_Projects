@@ -14,7 +14,21 @@
       <% }) %>
     </ul>
     <div class="centered">
-      <h2>Total: <%= totalSum.toFixed(2) %></h2>
+      <h2>Total: $ <%= totalSum.toFixed(2) %></h2>
+    </div>
+    <div class="centered">
+      <form action="/create-order" method="POST">
+        <script
+          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="sk_test_ioFFJoiLvYfSbO40bHLWJyd900nwiSKb9C"
+          data-amount="<%= (totalSum * 100).toFixed(2) %>"
+          data-name="Your Order"
+          data-description="All the items you ordered"
+          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="auto"
+          data-currency="usd">
+        </script>
+      </form>
     </div>
 	</main>
 		<%- include('../includes/end.ejs') %>
