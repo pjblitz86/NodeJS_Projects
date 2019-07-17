@@ -14,7 +14,8 @@ const fileStorage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, uuidv4());
+    let extension = file.originalname.split(".").pop();
+    cb(null, uuidv4() + "." + extension);
   }
 });
 
@@ -50,8 +51,8 @@ app.use("/feed", feedRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  const status = error.statusCode || 500;
-  const message = error.message;
+  const status = err.statusCode || 500;
+  const message = err.message;
   res.status(status).json({ message: message });
 });
 
