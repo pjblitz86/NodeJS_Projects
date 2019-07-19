@@ -62,7 +62,12 @@ app.use((err, req, res, next) => {
 mongoose
   .connect(MONGODBURI, { useNewUrlParser: true })
   .then(result => {
-    app.listen(8040, () => console.log("server started"));
+    const server = app.listen(8040);
+    console.log("server started");
+    const io = require("socket.io")(server);
+    io.on("connection", socket => {
+      console.log("Client connected");
+    });
     console.log("mongo connected");
   })
   .catch(err => console.log(err));
