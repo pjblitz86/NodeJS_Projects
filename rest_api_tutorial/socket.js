@@ -7,7 +7,7 @@ module.exports = {
   },
   getIO: () => {
     if (!io) {
-      throw new Error("Scoket.io not initialized");
+      throw new Error("Socket.io not initialized");
     }
     return io;
   }
