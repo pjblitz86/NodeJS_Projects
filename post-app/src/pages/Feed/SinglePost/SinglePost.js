@@ -6,7 +6,7 @@ import "./SinglePost.css";
 class SinglePost extends Component {
   state = {
     title: "",
-    author: "",
+    author: {},
     date: "",
     image: "",
     content: ""
